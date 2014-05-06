@@ -4,5 +4,8 @@ WHERE EXISTS (
 	SELECT *
 	FROM Writes w
 	WHERE p.pid = w.pid
-	AND NOT EXISTS 'een regisseur voor een film waar p aan geschreven heeft'
+	AND NOT EXISTS (
+		SELECT *
+		FROM Directs d
+		WHERE 'd.pid heeft een film geregiseerd waaraan w.pid geschreven heeft'
 );
