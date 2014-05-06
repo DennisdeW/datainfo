@@ -1,3 +1,8 @@
 SELECT p.name
 FROM Person p
-WHERE 'p alleen regisseurloze films geschreven heeft';
+WHERE EXISTS (
+	SELECT *
+	FROM Writes w
+	WHERE p.pid = w.pid
+	AND NOT EXISTS 'een regisseur voor een film waar p aan geschreven heeft'
+);
