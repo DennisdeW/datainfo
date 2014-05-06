@@ -7,5 +7,10 @@ WHERE EXISTS (
 	AND NOT EXISTS (
 		SELECT *
 		FROM Directs d
-		WHERE 'd.pid heeft een film geregiseerd waaraan w.pid geschreven heeft'
+		WHERE d.mid IN (
+			SELECT w2.mid
+			FROM Writes w2
+			WHERE w.pid = w2.pid
+		)
+	)
 );
