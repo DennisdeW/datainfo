@@ -1,6 +1,12 @@
-SELECT p.pid
+SELECT p.name
 FROM Person p
 WHERE EXISTS (
 	SELECT *
 	FROM Writes w
-	WHERE 'de film niet geregiseerd is';
+	WHERE p.pid = w.pid
+	AND NOT EXISTS (
+		SELECT *
+		FROM Directs d
+		WHERE w.mid = d.mid
+	)
+);
