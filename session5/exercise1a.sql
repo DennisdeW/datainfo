@@ -1,0 +1,14 @@
+CREATE TABLE Boek(
+isbn INT PRIMARY KEY,
+titel TEXT,
+auteur TEXT
+);
+
+CREATE TABLE Exemplaar (
+isbn INT NOT NULL,
+volgnr INT PRIMARY KEY,
+gewicht FLOAT,
+kast INT,
+CONSTRAINT fk_boek_exemplaar FOREIGN KEY (isbn) 
+	REFERENCES Boek(isbn) ON DELETE CASCADE ON UPDATE CASCADE
+);

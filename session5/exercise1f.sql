@@ -1,0 +1,16 @@
+BEGIN;
+CREATE OR REPLACE FUNCTION boek_cascade()
+RETURNS TRIGGER
+AS $$ 	BEGIN
+			DELETE FROM Exemplaar WHERE isbn = OLD.isbn; 
+			RETURN TRUE;
+		END;
+   $$
+LANGUAGE plpgsql;
+GRANT ALL ON FUNCTION boek_cascade() TO PUBLIC;
+COMMIT;
+
+CREATE TRIGGER boek_del_cascade
+AFTER DELETE ON Boek
+FOR EACH ROW
+EXECUTE PROCEDURE boek_cascade();
